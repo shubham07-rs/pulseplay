@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+    
+        .container1 {
+    
+          width: 100%;
+          height: auto;
+          /* max-width: 1000px; */
+          /* margin: auto; */
+          border: 1px solid black;
+          /* padding: 20px; */
+          /* box-sizing: border-box; */
+          position: fixed;
+          /* top: 10px; */
+          left: 0px;
+          bottom: 0px;
+          background-color: white;
+          background: linear-gradient(45deg, #ffa8B6, #a28089, #a0d2eb, #8458B3);
+          background-size: 600% 600%;
+          animation: gradient 10s ease infinite;
+    
+        }
+        @keyframes gradient {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+    
+        #container {
+          font-family: Arial, sans-serif;
+          /* text-align: center; */
+        }
+    
+        button {
+          padding: 10px 20px;
+          font-size: 16px;
+          background-color: #007bff;
+          color: #fff;
+          border: none;
+          cursor: pointer;
+        }
+    
+        button:hover {
+          background-color: #0056b3;
+        }
+    
+        h3 {
+          margin-top: 20px;
+          margin: auto;
+          width: auto;
+          position: relative;
+            left: 10px;
+    
+        }
+        h1{
+            font-family:Verdana;
+            /* color: red; */
+            position: relative;
+            left: 10px;
+        }
+        #signupButton
+        {
+            
+                        display: inline-block;
+                        outline: none;
+                        cursor: pointer;
+                        font-size: 14px;
+                        line-height: 1;
+                        border-radius: 500px;
+                        transition-property: background-color,border-color,color,box-shadow,filter;
+                        transition-duration: .3s;
+                        border: 1px solid transparent;
+                        letter-spacing: 2px;
+                        min-width: 160px;
+                        text-transform: uppercase;
+                        white-space: normal;
+                        font-weight: 700;
+                        text-align: center;
+                        padding: 16px 14px 18px;
+                        color: #616467;
+                        box-shadow: inset 0 0 0 2px #616467;
+                        background-color: transparent;
+                        height: 48px;
+                        position: relative;
+                        left: 85%;
+                        top: -50px;
+                    
+        }
+        #signupButton:hover{
+            color: #fff;
+            background-color: #616467;        
+        }
+        #sign
+        {
+            width: auto;
+            height: auto;
+            position: relative;
+            /* background-color: red; */
+            /* top: -50px; */
+        }
+      </style>
+</head>
+<body>
+    <div class="header">
+        <nav>
+            <img src="image/logo.png" class="logo">
+        
+    
+   <div class="player">
+       <div class="wrapper">
+           <div class="details">
+               <div class="now-playing">PLAYING x OF y</div>
+               <div class="track-art"></div>
+               <div class="track-name">Track Name</div>
+               <div class="track-artist">Track Artist</div>
+           </div>
+       
+
+           <div class="slider_container">
+               <div class="current-time">00:00</div>
+                <input type="range" min="1" max="100" value="0" class="seek_slider" onchange="seekTo()">
+                <div class="total-duration">00:00</div>
+           </div>
+
+           <div class="slider_container">
+               <i class="fa fa-volume-down"></i>
+                <input type="range" min="1" max="100" value="99" class="volume_slider" onchange="setVolume()">
+                <i class="fa fa-volume-up"></i>
+           </div>
+
+           <div class="buttons">
+               <div class="random-track" onclick="randomTrack()">
+                   <i class="fas fa-random fa-2x" title="random"></i>
+               </div>
+               <div class="prev-track" onclick="prevTrack()">
+                    <i class="fa fa-step-backward fa-2x"></i>
+                </div>
+                <div class="playpause-track" onclick="playpauseTrack()">
+                    <i class="fa fa-play-circle fa-5x"></i>
+                </div>
+                <div class="next-track" onclick="nextTrack()">
+                    <i class="fa fa-step-forward fa-2x"></i>
+                </div>
+                <div class="repeat-track" onclick="repeatTrack()">
+                    <i class="fa fa-repeat fa-2x" title="repeat"></i>
+                </div>
+           </div>
+
+            <div id="wave">
+                <span class="stroke"></span>
+                <span class="stroke"></span>
+                <span class="stroke"></span>
+                <span class="stroke"></span>
+                <span class="stroke"></span>
+                <span class="stroke"></span>
+                <span class="stroke"></span>
+            </div>  
+       </div>
+   </div>
+</nav>
+</div>
+<div id="empty_space"></div>
+   
+<div class="container1">
+   
+    <h1>Welcome</h1>
+    <div id="container">
+      <h3>You are currently in guest mode. Sign up now to access subscription features.</h3>
+      <div id="sign"><button id="signupButton"><a href="front.html">sign up</button></a></div>
+      </div>
+    <!-- <div id="sign"><button id="signupButton">Sign Up</button></div> -->
+  </div>
+
+  <script>
+    // document.getElementById('signupButton').addEventListener('click', function() {
+    //   // Perform action to switch to subscription mode
+    //   // For demonstration, let's just update the text to show the change
+    //   document.getElementById('status').textContent = "You are now in subscription mode!";
+    // });
+   function open()
+    {
+      alert("you are in subscription mode");
+      // window.open("front.html")
+    }
+  </script>
+</body>
+</html>
